@@ -1,0 +1,4 @@
+Convolution Layer(공간 구조 보존=하나의 벡터로 펼치지 않음)
+- conv의 output으로 나온 것의 의미: 그리드의 각 부분은 하나의 뉴런이며, input이 (필터에서)그 특정 뉴런의 활성화를 최대화하는 모습임
+- 각 activation map은 필터 중 하나를 슬라이드한 결과임
+- 각 filter는 input의 전체 깊이를 통해 내적을 수행하는 것. 따라서 filter의 개수만큼 output개수가 정해짐(따라서 output의 크기는 필터 개수xNxN)
