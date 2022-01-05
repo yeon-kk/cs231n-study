@@ -1,0 +1,24 @@
+Convolution Layer(공간 구조 보존=하나의 벡터로 펼치지 않음)
+-	W는 작은 filter(예에서는 5x5x3 filter)
+1. 이미지 공간에서 슬라이드(이동) 2. 모든 공간 위치에서 내적(해당 지점에서 필터를 펼친 것과 동일한 결과 즉, 5x5x3을 1x75로 펼친 뒤, 내적) 3. activation maps
+=> N개의 필터는 N개의 activation map의를 얻을 수 있다
+
+-	conv의 output으로 나온 것의 의미: 그리드의 각 부분은 하나의 뉴런이며, input이 (필터에서)그 특정 뉴런의 활성화를 최대화하는 모습임
+	각 filter는 input의 전체 깊이를 통해 내적을 수행. 따라서 filter의 개수만큼 output개수가 정해짐. 3차원도 동일(따라서 output: 필터 개수xNxN)
+	stride에 대한 직관? 해상도와 관련(더 큰 stride -> downsampling된 이미지 출력. downsampling된 이미지는 Pooling과 비슷하지만 차이가 있고, pooling보다 좋은 성능을 보임)
+	모든 공간 위치에서 filter와 이미지의 특정 부분에 내적 후 하나의 숫자를 얻음(input이 있고 뉴런W에 들어와 output, =>전체 input에 연결되는 대신 이미지 local 영역을 공간적으로 봄). 
+->해당 local 노드가 이미지의 모든 공간 위치에서 얼마나 많이 트리거 되는지 알 수 있게 됨(공간 구조 보존, activation map을 기반으로 추론가능)
+
+5x5 filter를 공간 위치에 밀어 넣었지만 동일한 가중치이며 동일한 매개변수 공유
+
+같은 region에서 추출된 서로 다른 특징(5개의 점은 동일한 region을 모두 보는 5개의 서로 다른 뉴런)
+
+Pooling layer: 표현(Representation)을 더 작고 관리하기 쉽게 함
+-	작아지면 매개변수의 수가 적어짐
+-	“downsampling” 하고싶을 때 사용
+-	Depth와 관련 없음! (input depth == output depth) 단지 공간적으로만 pooling (일반적으로 Max Pooling)
+
+filter의 각 영역(NxN) 중 가장 큰 값을 선택
+-	Pooling layer의 경우 레이어가 겹치지 않는 것이 일반적임
+
+결과만 보면 정보 자체는 엄청 적을 것 같은데 저 정보만 가지고 어떻게 분류를 할 수 있는지? => 이 Pooling output중 하나에 있는 각 값이 실제로 이 전체 네트워크에서 수행한 모든 결과의 누적. Higher level concept
