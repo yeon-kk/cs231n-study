@@ -70,3 +70,15 @@ Regularization: train set에 맞는 것 완화(패널티)=> 모델이 좀 더 �
 	SVM loss와 달리 성능을 더 높이려 함  
 
 L1과 L2 distance..? 이미지를 한점에 표현.. h는 양수만?  
+
+Saturated neurons kill the gradients =>  sigmoid의 경우, x의 gradient가 0에 가까워지만 다운스트림시 흐름을 없애고 0의 gradient를 갖게 됨.. 0에서만 그런줄 알았는데, x가 10일때도 평평해서 kill gradient
+sigmoid 출력이 0 중심이 아니다 => ?? : 비효율적인 gradient
+tanh: sigmoid와 유사하지만 [-1,1] zero centered (0 중심), 끝구간에서 saturated할 때 kills gradients
+ReLU: 양(입력공간의 절반)의 영역에서 saturated되지 않는다. max(0,x) , 계산이 빠르고 수렴속도는 6배
+-문제는 0이 중심이 아님
+-dead ReLU: relu가 data cloud를 지나가지 않는 부분..(잘못된 초기화->업데이트 및 활성화 안됨)
+-편향이 양수로 초기화하기도 하지만 대부분은 0으로 초기화
+-Leaky ReLU == Parametric Rectifier(PReLU): max(αx, x) α: 역전파로 학습할 수 있음
+-ELU: saturation이 잡음에 강함( ReLU와 Leaky ReLU 사이)
+-sigmoid (초기에 사용하고 이후는 사용안함) < tanh < Leaky ReLU, Maxout, ELU
+
