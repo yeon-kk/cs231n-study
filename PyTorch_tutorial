@@ -1,0 +1,20 @@
+torch.ones_like( x_data ) : x_data의 행렬 모양으로 1로 채워짐
+tensor[:,1] = 0 # [행,열] => 전체 행의 2열은 모두 0
+torch.cat([tensor, tensor, tensor], dim=1)
+matmul =내적
+mul=원소 별 곱셈==tensor*tensor 표현도 가능
+tensor.matmul(tensor.T) => T는 전치
+_ 접미사가 있다면 in-place : 제자리 연산(메모리 절약, 기록이 없어져서 도함수 계산시 문제될 수 있음)
+x = x+5처럼, tensor.add_(5) 하게되면, tensor의 원소들이 모두 5가 더해진 뒤 tensor에 다시 저장
+
+.backward() 를 호출하면, autograd가 gradient를 계산, 각 텐서의 .grad 속성에 저장
+
+업데이트는 optimizer에서 됨
+optim.step() 단계에서 모든 weight를 업데이트 시켜줌
+
+
+torch.nn은 반드시 미니배치로 들어가기 때문에 특정 형식을 맞추어 주어야 함
+xonv2D의 경우 (배치크기, 채널 수 , height, width) 형식을 맞추어야 함.
+따라서 한 개만 넣고 싶다면 1을 배치크기에 반드시 넣어주어야함
+
+테스트때는 weight업데이트, weight계산 그런 과정을 거치면 안되기 때문에 torch.no_grad()해야함
