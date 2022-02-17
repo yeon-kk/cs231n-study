@@ -1,0 +1,4 @@
+loss  계산과 label<->predict (accuracy)계산은 다르다..?
+또 마지막 노드가 1개일때와 2개일 때 차원도 다르고
+squeeze 하면 차원이 아예 사라질 수 있기 때문에 차원을 맞추려면 unsqueeze 하기
+layer 이름 찾기.. 이름 in 단어
